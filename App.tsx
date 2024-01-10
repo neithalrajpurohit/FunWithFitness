@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+// import {StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
@@ -9,7 +9,7 @@ const App = () => {
     SplashScreen.show();
     setTimeout(() => {
       SplashScreen.hide();
-    }, 1000);
+    }, 2000);
   }, []);
 
   return (
@@ -21,4 +21,4 @@ const App = () => {
 
 export default App;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

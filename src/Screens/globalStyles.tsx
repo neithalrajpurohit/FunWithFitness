@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {Dimensions} from 'react-native';
 
 const {height, width} = Dimensions.get('screen');
+
 export const introStyles = StyleSheet.create({
   introImgContainer: {
     height: height * 0.55,
@@ -36,5 +37,35 @@ export const introStyles = StyleSheet.create({
   text2: {
     color: '#4B4242',
     textAlign: 'center',
+    marginTop: height * 0.01,
+  },
+  registerContainer1: {
+    flex: 1,
+    backgroundColor: '#FEF3EF',
+  },
+  registerContainer2: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 40,
+    paddingTop: height * 0.04,
+  },
+  registerText1: {
+    color: '#000000',
+    fontSize: 28,
+    fontWeight: '600',
+    lineHeight: 28,
+    paddingBottom: 7,
+  },
+  registerText2: {
+    color: '#4B4242',
+    lineHeight: 18,
+    fontWeight: '600',
+  },
+  btnCont: {
+    paddingHorizontal: width * 0.1,
+    marginTop: height * 0.08,
+    fontWeight: '700',
+    fontSize: 18,
   },
 });

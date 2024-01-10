@@ -2,10 +2,13 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import Intro from '../Assets/Intro.png';
 import Intro2 from '../Assets/Intro2.png';
+import {useNavigation} from '@react-navigation/native';
+import {introStyles} from './globalStyles';
+import Button from '../Components/CustomComponents/CustomButton';
 
-import {introStyles} from './styles';
-import Button from '../Components/Button';
 const IntroScreen = () => {
+  const navigation = useNavigation<any>();
+
   return (
     <View>
       <View style={introStyles.introImgContainer}>
@@ -18,7 +21,10 @@ const IntroScreen = () => {
           stages, ensuring safe and effective movement.
         </Text>
         <View style={introStyles.btnContainer}>
-          <Button backgroundColor="#F41414" title="Register" color="#FFFFFF" />
+          <Button
+            title="Register"
+            onPress={() => navigation.navigate('RegisterScreen')}
+          />
         </View>
         <Text style={introStyles.text2}>Already have an account?</Text>
       </View>
