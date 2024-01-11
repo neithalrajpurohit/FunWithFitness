@@ -4,7 +4,10 @@ import IntroScreen from '../Screens/IntroScreen';
 import RegisterScreen from '../Screens/Auth/RegisterScreen';
 import VerificationScreen from '../Screens/Auth/VerificationScreen';
 import OtpVerifiedScreen from '../Screens/Auth/OtpVerifiedScreen';
-import ChildInfoScreen from '../Screens/Auth/ChildInfoScreen';
+import ChildInfoScreen from '../Screens/ChildDetails/ChildInfoScreen';
+import ChildReviewScreen from '../Screens/ChildDetails/ChildReviewScreen';
+import GroupScreen from '../Screens/GroupCreation/GroupScreen';
+import InvitationScreen from '../Screens/GroupCreation/InvitationScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +37,21 @@ export const RootNavigator = () => {
       <Stack.Screen
         name="ChildInfoScreen"
         component={ChildInfoScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChildReviewScreen"
+        component={ChildReviewScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GroupScreen"
+        component={GroupScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="InvitationScreen"
+        component={InvitationScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

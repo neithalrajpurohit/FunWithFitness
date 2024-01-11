@@ -64,7 +64,7 @@ export const introStyles = StyleSheet.create({
   },
   btnCont: {
     paddingHorizontal: width * 0.1,
-    marginTop: height * 0.08,
+    // marginTop: height * 0.08,
     fontWeight: '700',
     fontSize: 18,
   },

@@ -6,25 +6,36 @@ interface ButtonProps {
   title: string;
   backgroundColor?: string;
   onPress: any;
+  outline?: boolean;
 }
 const {height, width} = Dimensions.get('screen');
 
-const Button = ({
+const CustomButton = ({
   color = '#FFFFFF',
   title,
   backgroundColor = '#F41414',
   onPress,
+  outline,
 }: ButtonProps) => {
   return (
     <Pressable
-      style={[{backgroundColor: backgroundColor}, styles.btnStyle]}
+      style={[
+        {backgroundColor: backgroundColor},
+        outline ? styles.outlineBtnStyle : styles.btnStyle,
+      ]}
       onPress={onPress}>
-      <Text style={[styles.btnTextStyle, {color: color}]}>{title}</Text>
+      <Text
+        style={[
+          outline ? styles.outlineText : styles.btnTextStyle,
+          {color: color},
+        ]}>
+        {title}
+      </Text>
     </Pressable>
   );
 };
 
-export default Button;
+export default CustomButton;
 
 const styles = StyleSheet.create({
   btnStyle: {
@@ -33,6 +44,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnTextStyle: {
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  outlineBtnStyle: {
+    borderWidth: 1,
+    borderColor: '#FFD800',
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  outlineText: {
+    color: '#000000',
     textAlign: 'center',
     fontWeight: '700',
     fontSize: 16,
