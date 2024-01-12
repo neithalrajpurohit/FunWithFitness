@@ -1,41 +1,42 @@
-import {View, Pressable, StyleSheet} from 'react-native';
+import {View, Pressable, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import CustomInput from '../../Components/CustomComponents/CustomInput';
-
+import {useAppDispatch, useAppSelector} from '../../App/hooks';
+import {handleDelete} from '../../Features/childInfoSlice';
+import {introStyles} from '../../Screens/globalStyles';
 interface CustomChildInfoProps {
   registerState: any;
-  handleOnChange: (name: string, value: string, id: number) => void;
+  handleChange: (name: string, value: string, id: number) => void;
   showCalendar: boolean;
   setShowCalendar: (showCalendar: boolean) => any;
   id: number;
 }
-
 const CustomChildInfo = ({
   registerState,
-  handleOnChange,
+  handleChange,
   showCalendar,
   setShowCalendar,
   id,
 }: CustomChildInfoProps) => {
-  console.log(registerState, 'register');
-  console.log(id, registerState[id], 'lll');
+  const dispatch = useAppDispatch();
+  const registerStateBtn = useAppSelector(state => state.childInfo);
   return (
     <View style={{paddingBottom: 20}}>
       <View>
         <CustomInput
           label="Child First Name*"
           placeholder="Enter First Name"
-          value={registerState[id].childFirstName}
+          value={registerState.childFirstName}
           onChangeText={value => {
-            handleOnChange(value, 'childFirstName', id);
+            handleChange(value, 'childFirstName', id);
           }}
         />
         <CustomInput
           label="Child Last Name*"
           placeholder="Enter Last Name"
-          value={registerState[id].childLastName}
+          value={registerState.childLastName}
           onChangeText={value => {
-            handleOnChange(value, 'childLastName', id);
+            handleChange(value, 'childLastName', id);
           }}
         />
         <Pressable onPress={() => setShowCalendar(!showCalendar)}>
@@ -43,57 +44,65 @@ const CustomChildInfo = ({
           <CustomInput
             label="Date of birth*"
             placeholder="Enter D.O.B"
-            value={registerState[id].dob}
+            value={registerState.dob}
             onChangeText={value => {
-              handleOnChange(value, 'dob', id);
+              handleChange(value, 'dob', id);
             }}
           />
         </Pressable>
 
-        {showCalendar && (
+        {/* {showCalendar && (
           <Calendar
             onDayPress={day => {
               console.log('selected day', day);
             }}
           />
-        )}
+        )} */}
         <CustomInput
           label="Gender*"
           placeholder=""
-          value={registerState[id].gender}
+          value={registerState.gender}
           onChangeText={value => {
-            handleOnChange(value, 'gender', id);
+            handleChange(value, 'gender', id);
           }}
         />
         <CustomInput
           label="Height (cm)*"
           placeholder="Enter Height"
-          value={registerState[id].height}
+          value={registerState.height}
           onChangeText={value => {
-            handleOnChange(value, 'height', id);
+            handleChange(value, 'height', id);
           }}
         />
         <CustomInput
           label="Weight (Kg)*"
           placeholder="Enter Weight"
-          value={registerState[id].weight}
+          value={registerState.weight}
           onChangeText={value => {
-            handleOnChange(value, 'weight', id);
+            handleChange(value, 'weight', id);
           }}
         />
         <CustomInput
           label="Nick name*"
           placeholder="Enter Nickname"
-          value={registerState[id].nickName}
+          value={registerState.nickName}
           onChangeText={value => {
-            handleOnChange(value, 'nickName', id);
+            handleChange(value, 'nickName', id);
           }}
         />
       </View>
+      {registerStateBtn.length > 1 && (
+        <Pressable
+          onPress={() => {
+            dispatch(handleDelete({id}));
+          }}>
+          <Text style={introStyles.deleteBtnStyle}>Delete</Text>
+        </Pressable>
+      )}
     </View>
   );
 };
 
 export default CustomChildInfo;
 
-const styles = StyleSheet.create({});
+export const styles = StyleSheet.create({});

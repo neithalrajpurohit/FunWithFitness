@@ -16,10 +16,32 @@ import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 const {height, width} = Dimensions.get('screen');
+import {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 const GroupScreen = () => {
   const navigation = useNavigation();
   const [groupName, setGroupName] = useState<any>('');
+  const [groupPhoto, setGroupPhoto] = useState<any>(null);
+
+  const selectImage = () => {
+    const options = {
+      mediaType: 'photo',
+    };
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+      console.log('ImagePicker Response: ', response);
+      if (
+        !response.didCancel &&
+        !response.error &&
+        response.assets.length > 0
+      ) {
+        const selectedImage = response.assets[0];
+        setGroupPhoto(selectedImage);
+      }
+    });
+  };
 
   return (
     <ScrollView
@@ -43,11 +65,17 @@ const GroupScreen = () => {
           label="Group Name*"
           placeholder="Enter Group Name"
           value={groupName}
-          onChangeText={() => {}}
+          onChangeText={text => {
+            setGroupName(text);
+          }}
         />
       </View>
-      <Pressable style={styles.profileIcon}>
-        <Icon name="plus" size={60} />
+      <Pressable style={styles.profileIcon} onPress={selectImage}>
+        {groupPhoto && groupPhoto.uri ? (
+          <Image source={{uri: groupPhoto.uri}} style={styles.profileIcon} />
+        ) : (
+          <Icon name="plus" size={60} style={styles.plusIcon} />
+        )}
       </Pressable>
       <Text style={styles.desStyle}>Upload group photo</Text>
       <View style={introStyles.btnCont}>

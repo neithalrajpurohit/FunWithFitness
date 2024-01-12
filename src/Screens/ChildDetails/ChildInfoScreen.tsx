@@ -1,54 +1,24 @@
 import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import image3 from '../../Assets/Constant.png';
-
 import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {introStyles} from '../globalStyles';
-
 import CustomChildInfo from '../../Components/CustomComponents/CustomChildInfo';
+import {useAppDispatch, useAppSelector} from '../../App/hooks';
+import {handleAddChild, handleOnChange} from '../../Features/childInfoSlice';
 const {height, width} = Dimensions.get('screen');
 
 const ChildInfo = () => {
   const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
 
-  const [registerState, setRegisterState] = useState<any>([
-    {
-      //1 represents screen 1
-      0: {
-        childFirstName: '',
-        childLastName: '',
-        dob: '',
-        gender: '',
-        height: '',
-        weight: '',
-        nickName: '',
-      },
-    },
-    {
-      //2 represents screen 2
-      1: {
-        childFirstName: '',
-        childLastName: '',
-        dob: '',
-        gender: '',
-        height: '',
-        weight: '',
-        nickName: '',
-      },
-    },
-  ]);
+  const registerState = useAppSelector(state => state.childInfo);
 
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
-  const [childScreen, setChildScreen] = useState<any>([1]);
 
-  const handleOnChange = (value: string, name: string, id: number) => {
-    // setRegisterState((prevState: any) => {
-    //   return [...prevState, {[id]: {...prevState[id], [name]: value}}];
-  };
-  const handleOnClick = () => {
-    let id = Math.random();
-    setChildScreen([...childScreen, id]);
+  const handleChange = (value: string, name: string, id: number) => {
+    dispatch(handleOnChange({value, name, id}));
   };
 
   return (
@@ -70,13 +40,12 @@ const ChildInfo = () => {
       </View>
 
       {registerState.map((child: any, i) => {
-        console.log(child[i]);
         return (
           <View key={i} style={{}}>
             <CustomChildInfo
               id={i}
               registerState={child}
-              handleOnChange={handleOnChange}
+              handleChange={handleChange}
               showCalendar={showCalendar}
               setShowCalendar={setShowCalendar}
             />
@@ -91,7 +60,7 @@ const ChildInfo = () => {
           color="#000000"
           title="Add more children +"
           onPress={() => {
-            handleOnClick();
+            dispatch(handleAddChild());
           }}
         />
       </View>

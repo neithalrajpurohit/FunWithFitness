@@ -3,6 +3,9 @@ import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import {RootNavigator} from './src/Navigator/RootNavigator';
+import {store, persistor} from './src/Features/store';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const App = () => {
   useEffect(() => {
@@ -11,11 +14,15 @@ const App = () => {
       SplashScreen.hide();
     }, 2000);
   }, []);
-
+  console.log(store, 'jj');
   return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 };
 

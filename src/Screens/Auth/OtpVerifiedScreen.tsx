@@ -14,7 +14,7 @@ const OtpVerifiedScreen = () => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('ChildInfoScreen');
-    }, 5000);
+    }, 3000);
     handleSomeKindOfEvent();
   }, []);
 

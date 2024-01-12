@@ -68,4 +68,12 @@ export const introStyles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
   },
+  deleteBtnStyle: {
+    color: '#000000',
+    fontWeight: '700',
+    fontSize: 18,
+    marginTop: height * 0.04,
+    marginLeft: 'auto',
+    marginRight: 60,
+  },
 });
