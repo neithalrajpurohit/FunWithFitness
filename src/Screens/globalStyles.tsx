@@ -29,7 +29,7 @@ export const introStyles = StyleSheet.create({
   },
   btnContainer: {
     width: width * 0.6,
-    marginTop: height * 0.02,
+    marginTop: height * 0.03,
     marginBottom: height * 0.02,
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -64,7 +64,7 @@ export const introStyles = StyleSheet.create({
   },
   btnCont: {
     paddingHorizontal: width * 0.1,
-    // marginTop: height * 0.08,
+    marginBottom: height * 0.03,
     fontWeight: '700',
     fontSize: 18,
   },
@@ -72,8 +72,51 @@ export const introStyles = StyleSheet.create({
     color: '#000000',
     fontWeight: '700',
     fontSize: 18,
-    marginTop: height * 0.04,
+    marginTop: height * 0.01,
     marginLeft: 'auto',
-    marginRight: 60,
+    marginRight: 5,
+  },
+  deleteButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  deleteIcon: {
+    width: 20,
+    height: 20,
+    marginTop: height * 0.01,
+    marginRight: 25,
+  },
+  //todo
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Align buttons at each end of the container
+    padding: 10,
+    alignItems: 'center',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#000000',
+    borderRadius: 5,
+    padding: 17,
+  },
+  editbutton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#000000',
+    borderRadius: 5,
+    marginLeft: 'auto',
+    marginRight: 30,
+  },
+  buttonText: {
+    color: '#000000',
+    marginRight: 5,
+    fontWeight: '700',
+    fontSize: 18,
+  },
+  buttonIcon: {
+    width: 20,
+    height: 20,
   },
 });

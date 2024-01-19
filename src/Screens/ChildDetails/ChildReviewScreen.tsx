@@ -12,8 +12,14 @@ import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useAppSelector, useAppDispatch} from '../../App/hooks';
 import {height} from '../../utils';
-import {handleDelete} from '../../Features/childInfoSlice';
+import {
+  handleDelete,
+  // handleEdit,
+  handleResetState,
+} from '../../Features/childInfoSlice';
 import {introStyles} from '../globalStyles';
+import deleteImage from '../../Assets/deleteImage.png';
+import editImage from '../../Assets/editImage.png';
 
 const ChildReviewScreen = () => {
   const registerState = useAppSelector(state => state.childInfo);
@@ -25,6 +31,7 @@ const ChildReviewScreen = () => {
       navigation.goBack();
     }
   }, [registerState, navigation]);
+
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
@@ -44,7 +51,7 @@ const ChildReviewScreen = () => {
       </View>
       {registerState.map((displayItem, index: number) => {
         return (
-          <View style={styles.mainContainer}>
+          <View style={styles.mainContainer} key={index}>
             <View>
               <Text style={styles.mainContainerLabels}>Nick name</Text>
               <Text style={styles.mainText}>{displayItem.nickName}</Text>
@@ -69,12 +76,31 @@ const ChildReviewScreen = () => {
               <Text style={styles.mainContainerLabels}>Weight (kg)</Text>
               <Text style={styles.mainText}>{displayItem.weight}</Text>
             </View>
-            <Pressable
-              onPress={() => {
-                dispatch(handleDelete({id: index}));
-              }}>
-              <Text style={introStyles.deleteBtnStyle}>Delete</Text>
-            </Pressable>
+            <View style={introStyles.buttonContainer}>
+              <Pressable
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <View style={introStyles.editbutton}>
+                  <Text style={introStyles.buttonText}>Edit</Text>
+                  <Image source={editImage} style={introStyles.buttonIcon} />
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  if (registerState.length === 1) {
+                    dispatch(handleResetState());
+                    navigation.goBack();
+                  } else {
+                    dispatch(handleDelete({id: index}));
+                  }
+                }}>
+                <View style={introStyles.button}>
+                  <Text style={introStyles.buttonText}>Delete</Text>
+                  <Image source={deleteImage} style={introStyles.buttonIcon} />
+                </View>
+              </Pressable>
+            </View>
           </View>
         );
       })}

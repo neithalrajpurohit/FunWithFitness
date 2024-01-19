@@ -1,19 +1,20 @@
 import {
   StyleSheet,
   TextInput,
-  Dimensions,
   View,
   Text,
-  ScrollView,
+  KeyboardTypeOptions,
 } from 'react-native';
 import React from 'react';
+import {height, width} from '../../utils';
 
-const {height, width} = Dimensions.get('screen');
 interface CustomInputProps {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void; // the function doesnt return anything ,hence defining void
   label?: string;
+  keyboardType?: KeyboardTypeOptions;
+  securePswd?: boolean;
 }
 
 const CustomInput = ({
@@ -21,6 +22,8 @@ const CustomInput = ({
   value,
   onChangeText,
   label,
+  keyboardType,
+  securePswd,
 }: CustomInputProps) => {
   return (
     <View style={styles.inputCont}>
@@ -30,6 +33,8 @@ const CustomInput = ({
         value={value}
         onChangeText={onChangeText}
         style={styles.inputStyle}
+        keyboardType={keyboardType}
+        secureTextEntry={securePswd}
       />
     </View>
   );

@@ -4,41 +4,56 @@ import {
   View,
   ScrollView,
   Image,
-  Button,
   Pressable,
-  Dimensions,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {introStyles} from '../globalStyles';
 import image3 from '../../Assets/Constant.png';
 import CustomInput from '../../Components/CustomComponents/CustomInput';
 import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-const {height, width} = Dimensions.get('screen');
+import {height, width} from '../../utils';
+import deleteImage from '../../Assets/deleteImage.png';
+import editImage from '../../Assets/editImage.png';
+
 import {
   ImagePickerResponse,
+  MediaType,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import {useAppDispatch, useAppSelector} from '../../App/hooks';
+
+import {
+  handleChange,
+  handleAddChild,
+  handleDelete,
+  handleEdit,
+  handleResetState,
+} from '../../Features/groupCreationSlice';
 
 const GroupScreen = () => {
-  const navigation = useNavigation();
-  const [groupName, setGroupName] = useState<any>('');
-  const [groupPhoto, setGroupPhoto] = useState<any>(null);
+  const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
+  const groupState = useAppSelector(state => state.groupCreation);
 
-  const selectImage = () => {
+  // const [groupPhoto, setGroupPhoto] = useState<any>(null);
+
+  const selectImage = (i: number) => {
     const options = {
-      mediaType: 'photo',
+      mediaType: 'photo' as MediaType,
     };
     launchImageLibrary(options, (response: ImagePickerResponse) => {
-      console.log('ImagePicker Response: ', response);
       if (
         !response.didCancel &&
-        !response.error &&
+        response.assets &&
         response.assets.length > 0
       ) {
-        const selectedImage = response.assets[0];
-        setGroupPhoto(selectedImage);
+        const selectedImage: any = response.assets[0];
+        // setGroupPhoto(selectedImage);
+        dispatch(
+          handleChange({id: i, value: selectedImage.uri, name: 'uploadPhoto'}),
+        );
       }
     });
   };
@@ -60,24 +75,73 @@ const GroupScreen = () => {
           <Image source={image3} />
         </View>
       </View>
-      <View>
-        <CustomInput
-          label="Group Name*"
-          placeholder="Enter Group Name"
-          value={groupName}
-          onChangeText={text => {
-            setGroupName(text);
+      {groupState.map((child: any, index: number) => {
+        return (
+          <View>
+            <CustomInput
+              label="Group Name*"
+              placeholder="Enter Group Name"
+              value={groupState[index].groupName}
+              onChangeText={value => {
+                dispatch(handleChange({id: index, value, name: 'groupName'}));
+              }}
+            />
+            <Pressable
+              style={styles.profileIcon}
+              onPress={() => selectImage(index)}>
+              {child && child.uploadPhoto ? (
+                <Image
+                  source={{uri: child.uploadPhoto}}
+                  style={styles.profileIcon}
+                />
+              ) : (
+                <Icon name="plus" size={60} style={styles.plusIcon} />
+              )}
+            </Pressable>
+            <Text style={styles.desStyle}>
+              {child.uploadPhoto ? 'Change Photo' : 'Upload group photo'}
+            </Text>
+            <View style={introStyles.buttonContainer}>
+              {/* <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <View style={introStyles.editbutton}>
+            <Text style={introStyles.buttonText}>Edit</Text>
+            <Image source={editImage} style={introStyles.buttonIcon} />
+          </View>
+        </Pressable> */}
+              <Pressable
+                onPress={() => {
+                  if (groupState.length === 1) {
+                    dispatch(handleResetState());
+                    navigation.goBack();
+                  } else {
+                    dispatch(handleDelete({id: index}));
+                  }
+                }}>
+                <View style={introStyles.button}>
+                  <Text style={introStyles.buttonText}>Delete</Text>
+                  <Image source={deleteImage} style={introStyles.buttonIcon} />
+                </View>
+              </Pressable>
+            </View>
+          </View>
+        );
+      })}
+      <View style={[introStyles.btnCont, {marginBottom: 0}]}>
+        <CustomButton
+          outline
+          color="#000000"
+          title="Add more children +"
+          onPress={() => {
+            dispatch(handleAddChild());
           }}
         />
       </View>
-      <Pressable style={styles.profileIcon} onPress={selectImage}>
-        {groupPhoto && groupPhoto.uri ? (
-          <Image source={{uri: groupPhoto.uri}} style={styles.profileIcon} />
-        ) : (
-          <Icon name="plus" size={60} style={styles.plusIcon} />
-        )}
-      </Pressable>
-      <Text style={styles.desStyle}>Upload group photo</Text>
+
+      <View style={{marginTop: height * 0.02}} />
+
       <View style={introStyles.btnCont}>
         <CustomButton
           title="Next"

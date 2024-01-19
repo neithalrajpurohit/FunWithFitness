@@ -1,4 +1,4 @@
-import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
+import {Text, View, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import image3 from '../../Assets/Constant.png';
 import CustomButton from '../../Components/CustomComponents/CustomButton';
@@ -6,8 +6,12 @@ import {useNavigation} from '@react-navigation/native';
 import {introStyles} from '../globalStyles';
 import CustomChildInfo from '../../Components/CustomComponents/CustomChildInfo';
 import {useAppDispatch, useAppSelector} from '../../App/hooks';
-import {handleAddChild, handleOnChange} from '../../Features/childInfoSlice';
-const {height, width} = Dimensions.get('screen');
+import {
+  handleAddChild,
+  handleEdit,
+  handleOnChange,
+} from '../../Features/childInfoSlice';
+import {height} from '../../utils';
 
 const ChildInfo = () => {
   const navigation = useNavigation<any>();
@@ -17,8 +21,17 @@ const ChildInfo = () => {
 
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-  const handleChange = (value: string, name: string, id: number) => {
-    dispatch(handleOnChange({value, name, id}));
+  const handleChange = (
+    value: string,
+    name: string,
+    id: number,
+    type: 'add' | 'edit',
+  ) => {
+    if (type === 'add') {
+      dispatch(handleOnChange({value, name, id}));
+    } else {
+      dispatch(handleEdit({value, name, id}));
+    }
   };
 
   return (

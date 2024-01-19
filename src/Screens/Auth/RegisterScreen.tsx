@@ -1,27 +1,18 @@
-import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, Image, ScrollView} from 'react-native';
+import React from 'react';
 import image3 from '../../Assets/Constant.png';
 import CustomInput from '../../Components/CustomComponents/CustomInput';
 import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {introStyles} from '../globalStyles';
-
-const {height, width} = Dimensions.get('screen');
+import {handleOnChange} from '../../Features/parentsRegistrationSlice';
+import {useAppDispatch, useAppSelector} from '../../App/hooks';
 
 const RegisterScreen = () => {
   const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
+  const registerState = useAppSelector(state => state.parentsRegistration);
 
-  const [registerState, setRegisterState] = useState({
-    fistName: '',
-    lastName: '',
-    email: '',
-    contact: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const handleOnChange = (value: string, name: string) => {
-    setRegisterState({...registerState, [name]: value});
-  };
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
@@ -43,9 +34,9 @@ const RegisterScreen = () => {
         <CustomInput
           label="First Name*"
           placeholder="Enter First Name"
-          value={registerState.fistName}
+          value={registerState.firstName}
           onChangeText={value => {
-            handleOnChange(value, 'firstName');
+            dispatch(handleOnChange({name: 'firstName', value: value}));
           }}
         />
         <CustomInput
@@ -53,43 +44,52 @@ const RegisterScreen = () => {
           placeholder="Enter Last Name"
           value={registerState.lastName}
           onChangeText={value => {
-            handleOnChange(value, 'lastName');
+            dispatch(handleOnChange({name: 'lastName', value: value}));
           }}
         />
         <CustomInput
           label="Email ID*"
           placeholder="Enter email ID"
           value={registerState.email}
+          keyboardType="email-address"
           onChangeText={value => {
-            handleOnChange(value, 'email');
+            dispatch(handleOnChange({name: 'email', value: value}));
           }}
         />
+
         <CustomInput
           label="Mobile Number*"
           placeholder="Enter mobile number"
+          keyboardType="phone-pad"
           value={registerState.contact}
           onChangeText={value => {
-            handleOnChange(value, 'contact');
+            if (String(registerState!.contact!).length < 10) {
+              dispatch(handleOnChange({name: 'contact', value: value}));
+            }
           }}
         />
         <CustomInput
           label="Password*"
           placeholder="Enter Password"
+          keyboardType="visible-password"
+          securePswd={false}
           value={registerState.password}
           onChangeText={value => {
-            handleOnChange(value, 'password');
+            dispatch(handleOnChange({name: 'password', value: value}));
           }}
         />
         <CustomInput
           label="Confirm Password*"
           placeholder="Confirm Password"
+          keyboardType="visible-password"
+          securePswd={true}
           value={registerState.confirmPassword}
           onChangeText={value => {
-            handleOnChange(value, 'confirmPassword');
+            dispatch(handleOnChange({name: 'confirmPassword', value: value}));
           }}
         />
       </View>
-      <View style={introStyles.btnCont}>
+      <View style={introStyles.btnContainer}>
         <CustomButton
           title="Verify A/C"
           onPress={() => {

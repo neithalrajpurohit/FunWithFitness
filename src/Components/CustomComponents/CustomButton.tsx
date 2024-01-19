@@ -1,4 +1,4 @@
-import {StyleSheet, Text, Pressable, Dimensions} from 'react-native';
+import {StyleSheet, Text, Pressable} from 'react-native';
 import React from 'react';
 
 interface ButtonProps {
@@ -8,7 +8,6 @@ interface ButtonProps {
   onPress: any;
   outline?: boolean;
 }
-const {height, width} = Dimensions.get('screen');
 
 const CustomButton = ({
   color = '#FFFFFF',
@@ -42,6 +41,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 10,
+    // marginTop: height * 0.05,
+    // marginBottom: height * 0.05,
   },
   btnTextStyle: {
     textAlign: 'center',

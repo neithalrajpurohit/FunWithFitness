@@ -14,7 +14,7 @@ const App = () => {
       SplashScreen.hide();
     }, 2000);
   }, []);
-  console.log(store, 'jj');
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

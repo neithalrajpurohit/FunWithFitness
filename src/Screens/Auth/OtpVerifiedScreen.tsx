@@ -1,11 +1,10 @@
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import success from '../../Assets/Success.png';
 import {useNavigation} from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from 'lottie-react-native';
-
-const {height, width} = Dimensions.get('screen');
+import {height, width} from '../../utils';
 
 const OtpVerifiedScreen = () => {
   const navigation = useNavigation<any>();

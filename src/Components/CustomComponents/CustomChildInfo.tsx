@@ -1,9 +1,18 @@
-import {View, Pressable, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  Pressable,
+  StyleSheet,
+  Text,
+  Image,
+  KeyboardTypeOptions,
+} from 'react-native';
 import React from 'react';
 import CustomInput from '../../Components/CustomComponents/CustomInput';
 import {useAppDispatch, useAppSelector} from '../../App/hooks';
 import {handleDelete} from '../../Features/childInfoSlice';
 import {introStyles} from '../../Screens/globalStyles';
+import deleteImage from '../../Assets/deleteImage.png';
+
 interface CustomChildInfoProps {
   registerState: any;
   handleChange: (name: string, value: string, id: number) => void;
@@ -95,8 +104,10 @@ const CustomChildInfo = ({
         <Pressable
           onPress={() => {
             dispatch(handleDelete({id}));
-          }}>
+          }}
+          style={introStyles.deleteButtonContainer}>
           <Text style={introStyles.deleteBtnStyle}>Delete</Text>
+          <Image source={deleteImage} style={introStyles.deleteIcon} />
         </Pressable>
       )}
     </View>

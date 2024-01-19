@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import image3 from '../../Assets/Constant.png';
 import {OtpInput} from 'react-native-otp-entry';
 import {introStyles} from '../globalStyles';
 import CustomButton from '../../Components/CustomComponents/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-const {height, width} = Dimensions.get('screen');
+import {height, width} from '../../utils';
 
 const VerificationScreen = () => {
   const navigation = useNavigation<any>();

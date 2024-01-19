@@ -4,7 +4,8 @@ import Intro from '../Assets/Intro.png';
 import Intro2 from '../Assets/Intro2.png';
 import {useNavigation} from '@react-navigation/native';
 import {introStyles} from './globalStyles';
-import Button from '../Components/CustomComponents/CustomButton';
+
+import CustomButton from '../Components/CustomComponents/CustomButton';
 
 const IntroScreen = () => {
   const navigation = useNavigation<any>();
@@ -21,7 +22,7 @@ const IntroScreen = () => {
           stages, ensuring safe and effective movement.
         </Text>
         <View style={introStyles.btnContainer}>
-          <Button
+          <CustomButton
             title="Register"
             onPress={() => navigation.navigate('RegisterScreen')}
           />
